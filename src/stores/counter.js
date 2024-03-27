@@ -162,17 +162,18 @@ export const useCounterStore = defineStore('counter', {
       this.data_export_inbox = await axios({ method: 'post',data:{mail:this.mail_inbox}, url: this.domain_Backend + '/export-inbox/'});
       this.data_export_inbox = this.data_export_inbox.data;
       this.data_export_inbox = this.data_export_inbox.data_inbox;
+      setTimeout(this.F_Export_inbox, 2000);
     },
     async F_Export_inbox_available() {
       this.mail_inbox = this.mail_get_available;
       await this.F_Export_inbox();
-      setTimeout(this.F_Export_inbox_available, 3000);
+      // setTimeout(this.F_Export_inbox_available, 3000);
     },
-    async F_Export_inbox_mail_search() {
+    async F_Export_inbox_mail_search() {t 
       this.mail_inbox = this.mail_get_search;
-      // this.mail_get_search = null;
+      this.mail_get_search = null;
       await this.F_Export_inbox();
-      setTimeout(this.F_Export_inbox_available, 3000);
+      // setTimeout(this.F_Export_inbox_available, 3000);
     },
 
 
