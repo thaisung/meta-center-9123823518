@@ -12,14 +12,6 @@ const router = createRouter({
       component: HomeLayout,
       children: [
         {
-          path: "/chat-bot",
-          component: () => import("../views/ChatbotView.vue"),
-        },
-        {
-          path: "/upload-data",
-          component: () => import("../views/UploadView.vue"),
-        },
-        {
           path: "/",
           component: () => import("../views/MailView.vue"),
         },
