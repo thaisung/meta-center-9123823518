@@ -169,7 +169,7 @@ export const useCounterStore = defineStore('counter', {
       await this.F_Export_inbox();
       // setTimeout(this.F_Export_inbox_available, 3000);
     },
-    async F_Export_inbox_mail_search() {t 
+    async F_Export_inbox_mail_search() {
       this.mail_inbox = this.mail_get_search;
       this.mail_get_search = null;
       await this.F_Export_inbox();
