@@ -28,12 +28,12 @@ export default {
     return { counter }
   },
   mounted: function () {
-    this.F_all_user();
+    // this.F_all_user();
   },
   methods: {
-    async F_all_user(){
-      await this.counter.keep_login();
-    }
+    // async F_all_user(){
+    //   await this.counter.keep_login();
+    // }
   },
   components: {
     HeaDer,

@@ -29,17 +29,7 @@
     mounted: function () {
     },
     methods:{
-        async Follow(aa){
-            await this.counter.Follow_user(aa);
-            this.counter.List_follow();
-            this.counter.List_un_follow();
-        },
-        async F_FFF(){
-            this.counter.xacnhan=1;
-            await this.counter.F_add_hair();
-            this.counter.F_user_hair();
-            this.counter.xacnhan=2;
-        },
+    
     }
     }
 </script>
