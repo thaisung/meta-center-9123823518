@@ -12,7 +12,7 @@ const router = createRouter({
       component: HomeLayout,
       children: [
         {
-          path: "/",
+          path: "/chat-bot",
           component: () => import("../views/ChatbotView.vue"),
         },
         {
@@ -20,7 +20,7 @@ const router = createRouter({
           component: () => import("../views/UploadView.vue"),
         },
         {
-          path: "/temp-mail",
+          path: "/",
           component: () => import("../views/MailView.vue"),
         },
       ]
