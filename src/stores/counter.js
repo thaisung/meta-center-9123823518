@@ -166,13 +166,13 @@ export const useCounterStore = defineStore('counter', {
     async F_Export_inbox_available() {
       this.mail_inbox = this.mail_get_available;
       await this.F_Export_inbox();
-      setTimeout(this.F_Export_inbox_available, 6000);
+      setTimeout(this.F_Export_inbox_available, 3000);
     },
     async F_Export_inbox_mail_search() {
       this.mail_inbox = this.mail_get_search;
-      this.mail_get_search = null;
+      // this.mail_get_search = null;
       await this.F_Export_inbox();
-      setTimeout(this.F_Export_inbox_available, 6000);
+      setTimeout(this.F_Export_inbox_available, 3000);
     },
 
 
