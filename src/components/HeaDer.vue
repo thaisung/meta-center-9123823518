@@ -5,11 +5,11 @@
             <h1 class="text-[16px]">{{ counter.openthongtincanhan.username }}</h1>
         </router-link>
         <router-link to="/" :class="{'bg-gray-300':counter.Path_Route.path=='/'}" class="flex gap-3 items-center text-[14px] font-semibold cursor-pointer h-[50px] px-2 rounded">
-            <img src="@/assets/4.png" class="w-[25px] mr-[10px] ml-[3px]" />
+            <img src="@/assets/1.png" class="w-[25px] mr-[10px] ml-[3px]" />
             <h1 class="text-[16px]">Trang chủ</h1>
         </router-link>
         <router-link to="/Profile" :class="{'bg-gray-300':counter.Path_Route.path=='/Profile'}" class="flex  items-center text-[14px] font-semibold cursor-pointer h-[50px] px-2 rounded">
-            <img src="@/assets/3.png" class=" w-[28px] mr-[18px] ml-[3px] " />
+            <img src="@/assets/1.png" class=" w-[28px] mr-[18px] ml-[3px] " />
             <h1 class="text-[16px]">Hồ sơ</h1>
         </router-link>
     </div>
