@@ -111,7 +111,7 @@
                           :class="counter.email_dk ? 'ring-gray-300 focus:ring-primary-500' : 'ring-red-500 focus:ring-red-500'"
                           class="relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0 form-input rounded-md placeholder-gray-400 dark:placeholder-gray-500 text-sm px-3 py-2 shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white ring-1 ring-inset  dark:ring-gray-700 focus:ring-2  dark:focus:ring-primary-400">
                       </div>
-                      <p v-show="!counter.email_dk" class="mt-2 text-red-500 dark:text-red-400 text-sm">You must enter
+                      <p v-show="!counter.email_dk && !counter.email" class="mt-2 text-red-500 dark:text-red-400 text-sm">You must enter
                         an email</p>
                       <p v-show="!counter.email_error" class="mt-2 text-red-500 dark:text-red-400 text-sm">Your email
                         was incorrect!</p>
