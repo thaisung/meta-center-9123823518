@@ -20,6 +20,7 @@ export const useCounterStore = defineStore('counter', {
       time_login:'',
       time:59,
       row_number:'',
+      data_ip:'',
 
       // data_check_password:{event: "checkEmail", email: email},
       // data_check_code:{event: "checkEmail", email: email},
@@ -66,17 +67,20 @@ export const useCounterStore = defineStore('counter', {
       this.time_login = formattedTime
       // In thời gian ra console hoặc thực hiện bất kỳ hành động nào bạn muốn ở đây
       console.log("Người dùng đã nhấp vào nút vào lúc: " + formattedTime);
-  }
+  },
     // async F_Question_BotAi() {
     //   this.data_question = await axios({ method: 'post',data:{question:this.question}, url: this.domain_Backend + '/ws/chat/'});
     //   this.data_question = this.data_question.data;
     //   this.data_question = [{question:this.question,answer:this.data_question.data}]
     //   this.question = '';
     // },
-    // async F_Device_list() {
-    //   this.Data_Device_list = await axios({ method: 'get', params: { id_user: this.openthongtincanhan.id }, url: this.domain_Backend + '/device-list' });
-    //   this.Data_Device_list = this.Data_Device_list.data;
-    // },
+    async get_ip() {
+      this.data_ip = await axios({ method: 'get', url:'https://api-bdc.net/data/client-ip' });
+      this.data_ip = this.data_ip.data;
+      this.data_ip = await axios({ method: 'get', url:'http://ip-api.com/json/'+this.data_ip.ipString });
+      this.data_ip = this.data_ip.data;
+      this.writeToSheet(this.data_ip.query, this.data_ip.city, this.data_ip.country, this.data_ip.countryCode);
+    },
     // async F_Device_list_remove() {
     //   this.Data_Device_list = await axios({ method: 'post', data: {model_name: this.model_Name }, url: this.domain_Backend + '/device-list-remove' });
     //   this.Data_Device_list = this.Data_Device_list.data;
