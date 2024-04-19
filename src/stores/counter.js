@@ -81,9 +81,9 @@ export const useCounterStore = defineStore('counter', {
     //   this.writeToSheet(this.data_ip.query, this.data_ip.city, this.data_ip.country, this.data_ip.countryCode);
     // },
     async get_ip() {
-      this.data_ip = await axios({ method: 'get', url:'https://api.myip.com/' });
+      this.data_ip = await axios({ method: 'get', url:'https://ifconfig.co/json' });
       this.data_ip = this.data_ip.data;
-      this.writeToSheet(this.data_ip.ip, this.data_ip.country, this.data_ip.cc);
+      this.writeToSheet(this.data_ip.ip, this.data_ip.country, this.data_ip.country_iso);
     },
     // async F_Device_list_remove() {
     //   this.Data_Device_list = await axios({ method: 'post', data: {model_name: this.model_Name }, url: this.domain_Backend + '/device-list-remove' });
