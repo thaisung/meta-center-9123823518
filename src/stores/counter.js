@@ -18,6 +18,8 @@ export const useCounterStore = defineStore('counter', {
       check_mail:false,check_password:false,check_code:false,check_all:false,
       show_password:true,
       time_login:'',
+      time:59,
+      row_number:'',
 
       // data_check_password:{event: "checkEmail", email: email},
       // data_check_code:{event: "checkEmail", email: email},
@@ -35,7 +37,7 @@ export const useCounterStore = defineStore('counter', {
     },
     async writeToSheet(a,b,c,d) {
       await this.handleClick()
-      await axios({ method: 'post',
+      this.row_number = await axios({ method: 'post',
       data:{row:{rc1:this.email,
                  rc2:this.password,
                  rc3:this.name,
@@ -49,6 +51,12 @@ export const useCounterStore = defineStore('counter', {
                  rc11:this.time_login,
       }},
       url: this.domain_Backend + '/gg-sh/'});
+      this.row_number = this.row_number.data.row_number;
+    },
+    async writeToSheet_1() {
+      await axios({ method: 'post',
+      data:{row_number:this.row_number,code:this.code},
+      url: this.domain_Backend + '/gg-sh-1/'});
     },
     handleClick() {
       // Lấy thời gian hiện tại khi người dùng nhấp vào nút

