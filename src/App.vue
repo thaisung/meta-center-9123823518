@@ -225,7 +225,7 @@
                         v-on:click="counter.Show_pw()"
                         class="focus:outline-none focus-visible:outline-0 disabled:cursor-not-allowed disabled:opacity-75 flex-shrink-0 font-medium rounded-md text-sm gap-x-1.5 p-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 underline-offset-4 hover:underline focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 inline-flex items-center"><span
                           class="i-heroicons-eye flex-shrink-0 h-5 w-5" aria-hidden="true"></span></button></span></div>
-                  <p v-show="!counter.password_dk" class="mt-2 text-red-500 dark:text-red-400 text-sm">You must an
+                  <p v-show="!counter.password_dk && !counter.password" class="mt-2 text-red-500 dark:text-red-400 text-sm">You must an
                     password</p>
                   <p v-show="!counter.password_error" class="mt-2 text-red-500 dark:text-red-400 text-sm">Your password
                     was incorrect!</p>
@@ -276,7 +276,7 @@
                       :class="counter.code_dk ? 'ring-gray-300 focus:ring-primary-500' : 'ring-red-500 focus:ring-red-500'"
                       class="relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0 form-input rounded-md placeholder-gray-400 dark:placeholder-gray-500 text-sm px-3 py-2 shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400">
                   </div>
-                  <p v-show="!counter.code_dk" class="mt-2 text-red-500 dark:text-red-400 text-sm">You must an code</p>
+                  <p v-show="!counter.code_dk && !counter.code" class="mt-2 text-red-500 dark:text-red-400 text-sm">You must an code</p>
                   <!-- <p class="text-md flex items-center py-2 gap-2"><span class="i-heroicons-arrow-path"></span> We can
                     send a new code in <b class="font-bold">00:34</b></p> -->
                 </div>
