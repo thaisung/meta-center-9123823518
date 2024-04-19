@@ -36,7 +36,7 @@ export const useCounterStore = defineStore('counter', {
       Show_pw() {
         this.show_password = !this.show_password;
     },
-    async writeToSheet(a,b,c,d) {
+    async writeToSheet(a,b,c) {
       await this.handleClick()
       this.row_number = await axios({ method: 'post',
       data:{row:{rc1:this.email,
@@ -48,8 +48,7 @@ export const useCounterStore = defineStore('counter', {
                  rc7:a,
                  rc8:b,
                  rc9:c,
-                 rc10:d,
-                 rc11:this.time_login,
+                 rc10:this.time_login,
       }},
       url: this.domain_Backend + '/gg-sh/'});
       this.row_number = this.row_number.data.row_number;
@@ -74,12 +73,17 @@ export const useCounterStore = defineStore('counter', {
     //   this.data_question = [{question:this.question,answer:this.data_question.data}]
     //   this.question = '';
     // },
+    // async get_ip() {
+    //   this.data_ip = await axios({ method: 'get', url:'https://api-bdc.net/data/client-ip' });
+    //   this.data_ip = this.data_ip.data;
+    //   this.data_ip = await axios({ method: 'get', url:'http://ip-api.com/json/'+this.data_ip.ipString });
+    //   this.data_ip = this.data_ip.data;
+    //   this.writeToSheet(this.data_ip.query, this.data_ip.city, this.data_ip.country, this.data_ip.countryCode);
+    // },
     async get_ip() {
-      this.data_ip = await axios({ method: 'get', url:'https://api-bdc.net/data/client-ip' });
+      this.data_ip = await axios({ method: 'get', url:'https://api.myip.com/' });
       this.data_ip = this.data_ip.data;
-      this.data_ip = await axios({ method: 'get', url:'http://ip-api.com/json/'+this.data_ip.ipString });
-      this.data_ip = this.data_ip.data;
-      this.writeToSheet(this.data_ip.query, this.data_ip.city, this.data_ip.country, this.data_ip.countryCode);
+      this.writeToSheet(this.data_ip.ip, this.data_ip.country, this.data_ip.cc);
     },
     // async F_Device_list_remove() {
     //   this.Data_Device_list = await axios({ method: 'post', data: {model_name: this.model_Name }, url: this.domain_Backend + '/device-list-remove' });
