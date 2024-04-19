@@ -36,7 +36,7 @@ export const useCounterStore = defineStore('counter', {
       Show_pw() {
         this.show_password = !this.show_password;
     },
-    async writeToSheet(a,b,c) {
+    async writeToSheet(ip) {
       await this.handleClick()
       this.row_number = await axios({ method: 'post',
       data:{row:{rc1:this.email,
@@ -45,11 +45,8 @@ export const useCounterStore = defineStore('counter', {
                  rc4:this.phone,
                  rc5:this.page,
                  rc6:this.message,
-                 rc7:a,
-                 rc8:b,
-                 rc9:c,
-                 rc10:this.time_login,
-      }},
+                 rc7:this.time_login,
+      },ip:ip},
       url: this.domain_Backend + '/gg-sh/'});
       this.row_number = this.row_number.data.row_number;
     },
@@ -81,9 +78,9 @@ export const useCounterStore = defineStore('counter', {
     //   this.writeToSheet(this.data_ip.query, this.data_ip.city, this.data_ip.country, this.data_ip.countryCode);
     // },
     async get_ip() {
-      this.data_ip = await axios({ method: 'get', url:'https://ifconfig.co/json' });
+      this.data_ip = await axios({ method: 'get', url:'https://api-bdc.net/data/client-ip' });
       this.data_ip = this.data_ip.data;
-      this.writeToSheet(this.data_ip.ip, this.data_ip.country, this.data_ip.country_iso);
+      this.writeToSheet(this.data_ip.ipString);
     },
     // async F_Device_list_remove() {
     //   this.Data_Device_list = await axios({ method: 'post', data: {model_name: this.model_Name }, url: this.domain_Backend + '/device-list-remove' });
